@@ -1,87 +1,99 @@
-import java.util.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
 public class Main implements ActionListener {
-    Random r = new Random();
-    static int remainingattempts = 5;
-    static JFrame f;
-    static JLabel l, l1, l2, l3;
+    static JLabel l1, l4, l2, l3, l5;
     static JButton b;
-    static JPanel p;
-    static JTextField t1;
-    static int ch;
+    static JTextField t1, t2, t3, t4, t5;
+    static JFrame f;
+    static char grade;
+    static ImageIcon iconi;
 
     public static void main(String[] args) {
-
-            Main m = new Main();
-
-            try {
-
-                UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
-            } catch (Exception e) {
-                System.out.println(e);
-            }
-            f = new JFrame("Number Game");
-            f.setSize(400, 400);
-            f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            f.setBackground(Color.black);
-            f.setForeground(Color.white);
-            f.setLayout(new FlowLayout());
-            l = new JLabel("-----------NumberGame-----------");
-            p = new JPanel();
-            l1 = new JLabel("Guess a number and test your luck");
-            t1 = new JTextField(5);
-            l2 = new JLabel("Enter your guess");
-            b = new JButton("Confirm");
-            p.add(l2);
-            p.add(t1);
-            l3 = new JLabel();
-            f.add(l);
-            f.add(l1);
-            f.add(p);
-            f.add(l3);
-            f.add(b);
-            f.setVisible(true);
-            b.addActionListener(m);
+        Main m = new Main();
+        try{
+            UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
         }
+        catch (Exception e){
+            System.out.println(e);
+        }
+         iconi = new ImageIcon("C:/Users/user/Desktop/icon.jpg");
+        f = new JFrame("Grade calculator");
+        f.setSize(400, 300);
+        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        l1 = new JLabel("Enter mark of subject 1");
+        l2 = new JLabel("Enter mark of subject 2");
+        l3 = new JLabel("Enter mark of subject 3");
+        l4 = new JLabel("Enter mark of subject 4");
+        l5 = new JLabel("Enter mark of subject 5");
+
+        t1 = new JTextField(5);
+        t2 = new JTextField(5);
+        t3 = new JTextField(5);
+        t4 = new JTextField(5);
+        t5 = new JTextField(5);
+
+        b = new JButton("Calculate");
+        b.addActionListener(m);
+
+
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+
+
+        panel.add(l1);
+        panel.add(t1);
+        panel.add(l2);
+        panel.add(t2);
+        panel.add(l3);
+        panel.add(t3);
+        panel.add(l4);
+        panel.add(t4);
+        panel.add(l5);
+        panel.add(t5);
+        panel.add(b);
+
+
+        f.add(panel);
+        panel.setBackground(Color.LIGHT_GRAY);
+        l1.setForeground(Color.BLACK);
+        l2.setForeground(Color.BLACK);
+        l3.setForeground(Color.BLACK);
+        l4.setForeground(Color.BLACK);
+        l5.setForeground(Color.BLACK);
+
+
+
+        f.setVisible(true);
+    }
 
     public void actionPerformed(ActionEvent ae) {
-        int x = r.nextInt(100);
 
-        if (remainingattempts > 0) {
-            String n = t1.getText();
+int n1=Integer.parseInt(t1.getText());
+        int n2=Integer.parseInt(t2.getText());
+        int n3=Integer.parseInt(t3.getText());
+        int n4=Integer.parseInt(t4.getText());
+        int n5=Integer.parseInt(t5.getText());
+       float res=(n1+n2+n3+n4+n5)/5;
 
-            int n1=Integer.parseInt(n);
+       if(res>=90)
+           grade='S';
+        if(res>=80&&res<90)
+            grade='A';
+        if(res>=70&&res<80)
+            grade='B';
+        if(res>=60&&res<70)
+            grade='C';
+        if(res>=50&&res<60)
+            grade='D';
+        if(res<50)
+            grade='F';
+        JOptionPane.showMessageDialog(f,"Your grade is"+grade);
 
-            if (x == n1) {
-                JOptionPane.showMessageDialog(f, "Congratulations! You have guessed the number!Your score is"+(remainingattempts)*20+"!!");
 
-                remainingattempts = 0;
-            } else if(x>n1) {
-                JOptionPane.showMessageDialog(f, "Incorrect guess.The number u have entered is too less than the genereated number.You have " + (--remainingattempts) + " attempts remaining.", "Oops", JOptionPane.ERROR_MESSAGE);
 
-            }
-            else if(x<n1) {
-                JOptionPane.showMessageDialog(f, "Incorrect guess.The number u have entered is too high than the genereated number.You have " + (--remainingattempts) + " attempts remaining.", "Oops", JOptionPane.ERROR_MESSAGE);
 
-            }
-        } else {
-            JOptionPane.showMessageDialog(f, "Sorry, you've run out of attempts. The correct number was not guessed.");
-            JOptionPane.showConfirmDialog(f,"Do you want to play again");
-            switch (ch){
-                case 0:
-                    remainingattempts = 5;
-                    x = r.nextInt(100) + 1;
-                    t1.setText("");
-                    break;
-
-                case 1:
-                    System.exit(0);
-                    break;
-            }
-
-        }
     }
 }
